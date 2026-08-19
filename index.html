@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Braille Tutor | B.Tech Project Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f4c81;
+      --primary-dark: #0a3258;
+      --primary-light: #e8f1f8;
+      --accent: #2563eb;
+      --accent-warm: #d97706;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 12px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 8px -2px rgba(15, 23, 42, 0.04);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .brand, .badge { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Top Banner */
+    .top-strip {
+      background: var(--primary-dark);
+      color: #cbd5e1;
+      font-size: 0.78rem;
+      padding: 0.45rem 1.5rem;
+      text-align: center;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    /* Navbar */
+    nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--primary-dark);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .brand-badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.7rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      font-weight: 700;
+      border: 1px solid rgba(15, 76, 129, 0.2);
+    }
+    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-btn {
+      background: var(--primary);
+      color: #fff !important;
+      padding: 0.45rem 1rem;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      font-size: 0.85rem !important;
+      cursor: pointer;
+      border: none;
+    }
+    .nav-btn:hover { background: var(--primary-dark); }
+
+    /* Hero */
+    .hero-container {
+      max-width: 1100px;
+      margin: 2.5rem auto 0;
+      padding: 0 1.5rem;
+    }
+    .hero-card {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #0f4c81, #2563eb, #38bdf8);
+    }
+    .dept-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      border: 1px solid rgba(15, 76, 129, 0.15);
+    }
+    h1 {
+      font-size: 2.35rem;
+      font-weight: 800;
+      color: #0b192c;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-lead {
+      font-size: 1.08rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 2rem;
+      line-height: 1.65;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.75rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .btn-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 4px rgba(15, 76, 129, 0.2);
+    }
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background-color: #ffffff;
+      border-color: var(--border);
+      color: var(--text-main);
+    }
+    .btn-outline:hover {
+      background-color: #f1f5f9;
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+
+    /* Meta Bar */
+    .meta-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      text-align: left;
+    }
+    .meta-item-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 0.2rem;
+    }
+    .meta-item-val {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Sections */
+    .section-wrap {
+      max-width: 1100px;
+      margin: 3.5rem auto;
+      padding: 0 1.5rem;
+    }
+    .section-header { margin-bottom: 2rem; }
+    .section-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.3px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      border-color: #cbd5e1;
+      box-shadow: var(--shadow-md);
+    }
+    .card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.6rem;
+    }
+    .card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; }
+    .card ul { list-style-type: none; margin-top: 0.75rem; }
+    .card li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .card li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    /* Simulation */
+    .preview-box {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 2.25rem;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .preview-box h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 0.4rem;
+    }
+    .preview-box p {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      max-width: 550px;
+      margin: 0 auto 1.5rem;
+    }
+    .braille-grid {
+      display: inline-grid;
+      grid-template-columns: repeat(2, 42px);
+      gap: 14px;
+      background: rgba(255,255,255,0.04);
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 1rem;
+    }
+    .pin {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #334155;
+      border: 2px solid #475569;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .pin.actuated {
+      background: #38bdf8;
+      border-color: #7dd3fc;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.7);
+    }
+    .pin-caption {
+      font-size: 0.8rem;
+      color: #64748b;
+      font-family: monospace;
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    /* Toggle & Result Box */
+    .toggle-group {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .mode-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .mode-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .result-box {
+      padding: 1rem;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 8px;
+      display: inline-block;
+      min-width: 250px;
+    }
+    .result-box .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #7dd3fc;
+      margin-bottom: 0.3rem;
+    }
+    .result-box .character {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    /* Contact */
+    .contact-container {
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 3rem 2rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .contact-container h3 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+    .contact-container p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 580px;
+      margin: 0 auto 2rem;
+    }
+    .contact-cards {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .contact-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 0.85rem 1.4rem;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .contact-chip:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      color: var(--primary);
+    }
+    .contact-icon { font-size: 1.25rem; }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+      z-index: 999;
+      overflow-y: auto;
+      padding: 2.5rem 1rem;
+    }
+    .modal-box {
+      background: #ffffff;
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: 14px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .modal-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      border-radius: 14px 14px 0 0;
+    }
+    .modal-header h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-light);
+      cursor: pointer;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      line-height: 1;
+    }
+    .modal-close:hover { background: #e2e8f0; color: var(--text-main); }
+    .modal-body { padding: 2.5rem; color: #334155; }
+    .synopsis-doc-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .synopsis-doc-title h3 {
+      font-size: 1.35rem;
+      color: #0f172a;
+      margin-bottom: 0.4rem;
+    }
+    .synopsis-doc-title p {
+      font-size: 0.88rem;
+      color: var(--text-light);
+    }
+    .syn-section { margin-bottom: 1.75rem; }
+    .syn-section h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+      border-left: 3px solid var(--primary);
+      padding-left: 0.5rem;
+    }
+    .syn-section p {
+      font-size: 0.92rem;
+      line-height: 1.65;
+      text-align: justify;
+      color: #334155;
+    }
+    .syn-section ul { padding-left: 1.25rem; margin-top: 0.4rem; }
+    .syn-section li {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 0.4rem;
+      color: #334155;
+    }
+
+    footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.85rem; }
+      .hero-card { padding: 2.5rem 1.5rem; }
+      .modal-body { padding: 1.5rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP STRIP -->
+  <div class="top-strip">
+    Galgotias College of Engineering &amp; Technology | Affiliated to AKTU Lucknow
+  </div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="brand">
+        BrailleTutor <span class="brand-badge">ECE-ACT</span>
+      </a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#modes">Learning Modes</a>
+        <a href="#contact">Contact</a>
+        <button class="nav-btn" onclick="openSynopsisModal()">View Synopsis</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <div class="hero-container">
+    <div class="hero-card">
+      <div class="dept-badge">
+        Department of Electronics &amp; Communication Engineering (ACT)
+      </div>
+      <h1>Smart Interactive Braille Tutor Device for Visually Impaired Children</h1>
+      <p class="hero-lead">
+        An embedded, multimodal assistive platform combining refreshable solenoid-driven tactile actuation with real-time speech feedback for independent Braille literacy.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="openSynopsisModal()">
+          📄 Open Full Project Synopsis
+        </button>
+        <a href="#contact" class="btn btn-outline">
+          🤝 Contact / Collaborate
+        </a>
+      </div>
+
+      <!-- METADATA STRIP -->
+      <div class="meta-bar">
+        <div>
+          <div class="meta-item-label">Project Lead</div>
+          <div class="meta-item-val">Piyush Kumar</div>
+        </div>
+        <div>
+          <div class="meta-item-label">Branch &amp; Specialization</div>
+          <div class="meta-item-val">B.Tech ECE (ACT)</div>
+        </div>
+        <div>
+          <div class="meta-item-label">Project Category</div>
+          <div class="meta-item-val">Embedded IoT &amp; Assistive Tech</div>
+        </div>
+        <div>
+          <div class="meta-item-label">Current Stage</div>
+          <div class="meta-item-val">Prototype &amp; Design Stage</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN BODY -->
+  <div class="section-wrap" id="overview">
+
+    <!-- PROBLEM & SOLUTION -->
+    <div class="section-header">
+      <div class="section-tag">Project Scope</div>
+      <div class="section-title">Core Engineering Objectives</div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 3.5rem;">
+      <div class="card">
+        <div class="card-icon">⚠️</div>
+        <h3>The Accessibility Challenge</h3>
+        <p>
+          Early tactile literacy is vital for visually impaired children. However, traditional slates and styluses lack real-time feedback and require continuous 1-on-1 human supervision. Meanwhile, commercial refreshable Braille displays cost thousands of dollars, placing them out of reach for most special education schools.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💡</div>
+        <h3>The Engineered Solution</h3>
+        <p>
+          We propose an affordable, standalone embedded tutor unit. By interfacing an ESP32 microcontroller with a micro-actuated 6-dot matrix, tactile sensors, and a DFPlayer audio module, the device guides students through gamified alphabet learning and dynamic quizzes without instructor dependency.
+        </p>
+      </div>
+    </div>
+
+    <!-- BRAILLE INTERACTIVE SIMULATION -->
+    <div class="preview-box">
+      <h3>Interactive Tactile Cell Mechanism (Standard 6-Dot Matrix)</h3>
+      <p>Click any dot below to simulate pin actuation. Toggle between Alphabet and Numbers mode to see the translation.</p>
+      
+      <div class="braille-grid" id="brailleGrid">
+        <div class="pin" data-dot="1" onclick="togglePin(this)"></div>
+        <div class="pin" data-dot="4" onclick="togglePin(this)"></div>
+        <div class="pin" data-dot="2" onclick="togglePin(this)"></div>
+        <div class="pin" data-dot="5" onclick="togglePin(this)"></div>
+        <div class="pin" data-dot="3" onclick="togglePin(this)"></div>
+        <div class="pin" data-dot="6" onclick="togglePin(this)"></div>
+      </div>
+      <div class="pin-caption">Dynamic Pin Configuration | Solenoid / Linear Actuator Driven</div>
+      
+      <div class="toggle-group">
+        <button class="mode-btn active" id="btnAlphabet" onclick="setMode('alphabet')">Alphabet (A-Z)</button>
+        <button class="mode-btn" id="btnNumbers" onclick="setMode('numbers')">Numbers (0-9)</button>
+      </div>
+
+      <div class="result-box">
+        <div class="label" id="resultLabel">Recognized Character</div>
+        <div class="character" id="brailleOutput">-</div>
+      </div>
+    </div>
+
+    <!-- TECHNICAL ARCHITECTURE -->
+    <div class="section-header" id="architecture">
+      <div class="section-tag">ECE System Design</div>
+      <div class="section-title">Hardware &amp; Firmware Architecture</div>
+    </div>
+
+    <div class="grid-3" style="margin-bottom: 3.5rem;">
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Embedded Core &amp; Processing</h3>
+        <ul>
+          <li>Microcontroller: ESP32 / Arduino Core</li>
+          <li>Power Management: 3.7V Li-ion battery + BMS</li>
+          <li>Signal debouncing &amp; interrupt handling</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🎛️</div>
+        <h3>Actuation &amp; Sensing</h3>
+        <ul>
+          <li>6-Pin Micro-solenoids for tactile output</li>
+          <li>ULN2803 Darlington driver IC interface</li>
+          <li>Capacitive touch / tactile keys for user input</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🔊</div>
+        <h3>Multimodal Audio Engine</h3>
+        <ul>
+          <li>DFPlayer Mini with onboard DAC</li>
+          <li>8Ω 2W enclosed chamber speaker</li>
+          <li>Prerecorded phonetics &amp; real-time voice prompts</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MODES -->
+    <div class="section-header" id="modes">
+      <div class="section-tag">User Experience</div>
+      <div class="section-title">Interactive Learning Modes</div>
+    </div>
+
+    <div class="grid-3" style="margin-bottom: 3.5rem;">
+      <div class="card">
+        <h3>1. Letter Learn Mode</h3>
+        <p>Device pronounces a character and simultaneously raises corresponding tactile pins for finger exploration.</p>
+      </div>
+      <div class="card">
+        <h3>2. Gamified Quiz Mode</h3>
+        <p>Audio engine prompts the student to form a specific letter by pressing tactile buttons, validating inputs in real time.</p>
+      </div>
+      <div class="card">
+        <h3>3. Educator Web Sync</h3>
+        <p>Optional Wi-Fi telemetry logs practice duration and accuracy scores to a parent/teacher companion web dashboard.</p>
+      </div>
+    </div>
+
+    <!-- CONTACT SECTION -->
+    <div class="contact-container" id="contact">
+      <div class="section-tag" style="justify-content: center; display: flex;">Connect</div>
+      <h3>Interested in Collaborating?</h3>
+      <p>
+        I am actively developing the embedded circuits, 3D casing, and voice firmware. If you'd like to work together, offer mentorship, or discuss hardware architecture, reach out!
+      </p>
+
+      <div class="contact-cards">
+        <a href="mailto:piyushkumar3957020@gmail.com" class="contact-chip">
+          <span class="contact-icon">✉️</span>
+          <span>piyushkumar3957020@gmail.com</span>
+        </a>
+        <a href="https://instagram.com/impiyush_x" target="_blank" rel="noopener noreferrer" class="contact-chip">
+          <span class="contact-icon">📸</span>
+          <span>@impiyush_x</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FULL SYNOPSIS MODAL -->
+  <div class="modal-overlay" id="synopsisModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>Official Project Synopsis Document</h2>
+        <button class="modal-close" onclick="closeSynopsisModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="synopsis-doc-title">
+          <h3>GALGOTIAS COLLEGE OF ENGINEERING &amp; TECHNOLOGY</h3>
+          <p>DEPARTMENT OF ELECTRONICS &amp; COMMUNICATION ENGINEERING (ACT)</p>
+          <p style="margin-top: 0.25rem; font-weight: 600; color: var(--primary);">B.Tech Project Work Synopsis</p>
+        </div>
+
+        <div class="syn-section">
+          <h4>1. Project Title</h4>
+          <p><strong>Smart Interactive Braille Tutor Device for Visually Impaired Children</strong></p>
+        </div>
+
+        <div class="syn-section">
+          <h4>2. Candidate &amp; Academic Details</h4>
+          <p><strong>Candidate:</strong> Piyush Kumar | <strong>Department:</strong> Electronics &amp; Communication Engineering (ACT)<br>
+          <strong>Affiliation:</strong> Dr. APJ Abdul Kalam Technical University (AKTU), Lucknow</p>
+        </div>
+
+        <div class="syn-section">
+          <h4>3. Abstract</h4>
+          <p>
+            Early Braille literacy is critical for visually impaired children, yet traditional learning tools require continuous one-on-one human supervision and lack interactive feedback. In this project, we propose a portable, low-cost Smart Interactive Braille Tutor Device designed to help visually impaired children independently learn Braille characters. The system combines an electromechanical 6-pin tactile cell driven by micro-actuators with synchronized audio feedback and touch sensors. Driven by an embedded microcontroller (ESP32), the device provides multiple operational modes (Letter Pronunciation, Gamified Quiz Mode, and Error Correction), bridging the early childhood tactile education gap in an engaging and accessible manner.
+          </p>
+        </div>
+
+        <div class="syn-section">
+          <h4>4. Problem Formulation &amp; Need</h4>
+          <ul>
+            <li><strong>High Equipment Cost:</strong> Commercial electronic Braille displays are prohibitively expensive for individual families and public schools in developing regions.</li>
+            <li><strong>Lack of Self-Paced Practice:</strong> Beginners cannot independently verify tactile correctness without continuous instructor assistance.</li>
+            <li><strong>Significance:</strong> A low-cost, portable tutor device democratizes early Braille education and improves tactile pattern retention through multimodal auditory-haptic reinforcement.</li>
+          </ul>
+        </div>
+
+        <div class="syn-section">
+          <h4>5. Project Objectives</h4>
+          <ul>
+            <li>To design and fabricate an ergonomic, low-cost 6-dot tactile input/output mechanism suitable for children's fingertips.</li>
+            <li>To develop embedded firmware implementing alphabet pronunciation, number learning, and interactive quiz modes.</li>
+            <li>To integrate a synchronized audio feedback system for real-time auditory validation and voice guidance.</li>
+            <li>To optimize circuit efficiency for portable, standalone battery-powered operation.</li>
+          </ul>
+        </div>
+
+        <div class="syn-section">
+          <h4>6. Methodology &amp; Execution Plan</h4>
+          <ul>
+            <li><strong>Phase 1 (Hardware Design &amp; Interfacing):</strong> Designing the 6-pin actuator driver circuit using ULN2803, microcontroller integration, and capacitive touch sensor calibration.</li>
+            <li><strong>Phase 2 (Firmware &amp; Logic Implementation):</strong> Programming Braille matrix lookups, debounce algorithms, and state machines for mode transitions.</li>
+            <li><strong>Phase 3 (Audio Synthesis Integration):</strong> Interfacing DFPlayer Mini for offline voice feedback, question prompts, and correctness cues.</li>
+            <li><strong>Phase 4 (Casing &amp; Validation):</strong> Designing a 3D-printed ergonomic enclosure and evaluating tactile response times and user usability.</li>
+          </ul>
+        </div>
+
+        <div class="syn-section">
+          <h4>7. References</h4>
+          <ul>
+            <li>[1] M. S. Islam and S. Roy, "Design and Development of an Interactive Electronic Braille Tutor for Visually Impaired Beginners," <em>IEEE Transactions on Human-Machine Systems</em>, 2019.</li>
+            <li>[2] K. S. Babu and A. Anand, "Low-Cost Refreshable Braille Cell and Audio Assistive Device for Blind Literacy," <em>IEEE International Conference on Embedded Systems</em>, 2021.</li>
+            <li>[3] P. Verma and R. K. Sharma, "Automated Tactile and Audio Learning Aids for Early Childhood Special Education," <em>Journal of Assistive Technologies</em>, 2022.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Academic Project Showcase &copy; 2026 Piyush Kumar | Department of Electronics &amp; Communication Engineering (ACT)</p>
+    <p style="margin-top: 0.3rem; color: #94a3b8; font-size: 0.8rem;">Galgotias College of Engineering &amp; Technology, Greater Noida</p>
+  </footer>
+
+  <script>
+    function openSynopsisModal() {
+      document.getElementById('synopsisModal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSynopsisModal() {
+      document.getElementById('synopsisModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('synopsisModal');
+      if (event.target === modal) {
+        closeSynopsisModal();
+      }
+    };
+
+    let currentMode = 'alphabet';
+
+    // Braille Dictionaries
+    const brailleAlphabet = {
+      '1': 'A', '12': 'B', '14': 'C', '145': 'D', '15': 'E',
+      '124': 'F', '1245': 'G', '125': 'H', '24': 'I', '245': 'J',
+      '13': 'K', '123': 'L', '134': 'M', '1345': 'N', '135': 'O',
+      '1234': 'P', '12345': 'Q', '1235': 'R', '234': 'S', '2345': 'T',
+      '136': 'U', '1236': 'V', '2456': 'W', '1346': 'X', '13456': 'Y', '1356': 'Z'
+    };
+
+    const brailleNumbers = {
+      '1': '1', '12': '2', '14': '3', '145': '4', '15': '5',
+      '124': '6', '1245': '7', '125': '8', '24': '9', '245': '0'
+    };
+
+    function setMode(mode) {
+      currentMode = mode;
+      
+      document.getElementById('btnAlphabet').classList.remove('active');
+      document.getElementById('btnNumbers').classList.remove('active');
+      
+      if (mode === 'alphabet') {
+        document.getElementById('btnAlphabet').classList.add('active');
+        document.getElementById('resultLabel').innerText = 'Recognized Character';
+      } else {
+        document.getElementById('btnNumbers').classList.add('active');
+        document.getElementById('resultLabel').innerText = 'Recognized Number';
+      }
+      
+      evaluateBraille();
+    }
+
+    function togglePin(element) {
+      element.classList.toggle('actuated');
+      evaluateBraille();
+    }
+
+    function evaluateBraille() {
+      const pins = document.querySelectorAll('#brailleGrid .pin');
+      let activeDots = [];
+      
+      pins.forEach(pin => {
+        if(pin.classList.contains('actuated')) {
+          activeDots.push(pin.getAttribute('data-dot'));
+        }
+      });
+      
+      activeDots.sort();
+      const dotSequence = activeDots.join('');
+      const outputElement = document.getElementById('brailleOutput');
+      
+      const dictionary = currentMode === 'alphabet' ? brailleAlphabet : brailleNumbers;
+      
+      if(dotSequence === '') {
+        outputElement.innerText = '-';
+      } else if (dictionary[dotSequence]) {
+        outputElement.innerText = dictionary[dotSequence];
+      } else {
+        outputElement.innerText = '?';
+      }
+    }
+  </script>
+</body>
+</html>
